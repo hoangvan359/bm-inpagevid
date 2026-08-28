@@ -525,17 +525,6 @@
     justify-content: center;
     cursor: pointer;
   }
-  /* Top-right area: đóng QC (flush right) */
-  .ad-overlay-mid {
-    position: absolute;
-    top: 64px;
-    left: 0;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    z-index: 2;
-  }
   /* Volume/unmute — floats above the info bar, near bottom-right */
   .ad-volume-btn {
     position: absolute;
@@ -550,23 +539,6 @@
     justify-content: center;
     cursor: pointer;
     z-index: 2;
-  }
-  .ad-dong-qc {
-    width: 68px;
-    height: 32px;
-    padding: 6px;
-    background: rgba(0,0,0,0.6);
-    border-radius: 4px 0 0 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    font-family: var(--font-sans);
-    font-size: 13px;
-    line-height: 18px;
-    font-weight: 400;
-    color: rgba(255,255,255,0.95);
-    cursor: pointer;
   }
   /* Bottom info bar */
   .ad-info-bar {
@@ -774,11 +746,6 @@
           </div>
         </div>
 
-        <!-- Top-right: đóng QC -->
-        <div class="ad-overlay-mid">
-          <div class="ad-dong-qc" id="adCloseQcBtn" role="button" aria-label="Đóng quảng cáo">Đóng QC</div>
-        </div>
-
         <!-- Volume/unmute — floats above info bar -->
         <div class="ad-volume-btn" id="adVolumeBtn" role="button" aria-label="Bật/tắt tiếng">
           <svg class="icon-muted" width="20" height="20" viewBox="0 0 20 20" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M17.4369 3.18681C17.6322 2.99154 17.6322 2.67496 17.4369 2.4797C17.2416 2.28444 16.9251 2.28444 16.7298 2.4797L2.9798 16.2297C2.78454 16.425 2.78454 16.7415 2.9798 16.9368C3.17506 17.1321 3.49165 17.1321 3.68691 16.9368L6.30973 14.314L9.66076 17.0459C10.461 17.6983 11.6528 17.1329 11.6528 16.1065V8.97095L13.5688 7.05489C14.3004 7.83613 14.7495 8.87663 14.7495 10.0087C14.7495 11.2175 14.2464 12.3188 13.422 13.1121C13.2143 13.3119 13.208 13.6423 13.4078 13.8501C13.6077 14.0578 13.9381 14.0641 14.1458 13.8642C15.1655 12.883 15.7933 11.5138 15.7933 10.0087C15.7933 8.58273 15.2223 7.28165 14.3072 6.31647L15.3699 5.25383C16.5607 6.49121 17.2895 8.16536 17.2895 10.0087C17.2895 11.8998 16.5224 13.6128 15.2764 14.8588C15.0726 15.0627 15.0726 15.3931 15.2764 15.597C15.4802 15.8008 15.8107 15.8008 16.0145 15.597C17.4477 14.1638 18.3333 12.1886 18.3333 10.0087C18.3333 7.87665 17.4861 5.94042 16.1081 4.51561L17.4369 3.18681ZM11.6528 3.89352V5.80672C11.6528 5.96341 11.5915 6.11389 11.482 6.22598L5.17655 12.6811C5.06365 12.7967 4.90891 12.8619 4.74734 12.8619H4.52854H2.18859C1.90153 12.8619 1.66667 12.627 1.66667 12.3399V7.67745C1.66667 7.39039 1.90153 7.15553 2.18859 7.15553H4.52854L9.66076 2.95406C10.4523 2.30166 11.6528 2.86707 11.6528 3.89352Z" fill="white"/></svg>
@@ -807,7 +774,6 @@
         var volumeBtn = document.getElementById('adVolumeBtn');
         var progressFill = document.getElementById('adProgressFill');
         var playOverlay = document.getElementById('adPlayOverlay');
-        var closeQcBtn = document.getElementById('adCloseQcBtn');
         var adWrapper = document.querySelector('.ad-wrapper');
         video.muted = true;
 
@@ -827,11 +793,6 @@
             });
           }
         }
-
-        closeQcBtn.addEventListener('click', function () {
-          video.pause();
-          adWrapper.remove();
-        });
 
         volumeBtn.addEventListener('click', function () {
           video.muted = !video.muted;
