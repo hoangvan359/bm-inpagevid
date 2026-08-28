@@ -735,7 +735,7 @@
       <div class="ad-label">KÉO XUỐNG ĐỂ XEM TIẾP SAU QUẢNG CÁO</div>
       <div class="ad-frame">
         <!-- Video creative -->
-        <video id="adVideo" class="video-placeholder" poster="" muted playsinline autoplay>
+        <video id="adVideo" class="video-placeholder" poster="" muted playsinline>
           <source src="assets/vinfast_videoad.mp4" type="video/mp4">
         </video>
 
@@ -851,6 +851,15 @@
         video.addEventListener('ended', function () {
           playOverlay.classList.add('is-visible');
         });
+
+        // Start playback as soon as even 1px of the ad enters the viewport.
+        var startObserver = new IntersectionObserver(function (entries) {
+          if (entries[0].isIntersecting) {
+            video.play();
+            startObserver.disconnect();
+          }
+        }, { threshold: 0 });
+        startObserver.observe(adWrapper);
       })();
     </script>
 
