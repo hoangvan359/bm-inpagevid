@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hà Nội Mới Clone — 375x812</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --red: #e20019;
+    --dark: #222;
+    --gray-text: #525252;
+    --gray-author: #424242;
+    --gray-light: #999;
+    --border: #e5e5e5;
+    --bg-tag: #f5f5f5;
+    --bg-white: #fff;
+    --font-serif: 'IBM Plex Serif', Georgia, serif;
+    --font-sans: 'Roboto', Arial, sans-serif;
+  }
+
+  body {
+    font-family: var(--font-serif);
+    background: var(--bg-white);
+    color: var(--dark);
+    width: 375px;
+    margin: 0 auto;
+    position: relative;
+    padding-bottom: 60px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* === BANNER AD === */
+  .banner-ad {
+    width: 100%;
+    height: 125px;
+    background: #bbb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    font-family: var(--font-sans);
+    font-size: 13px;
+  }
+
+  /* === HEADER === */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--border);
+  }
+  .header .hamburger {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+  }
+  .header .hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--dark);
+    border-radius: 1px;
+  }
+  .header .logo {
+    font-family: var(--font-serif);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--red);
+    letter-spacing: -0.5px;
+  }
+  .header .search-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* === NAV === */
+  .main-nav {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 10px 15px;
+    overflow-x: auto;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--font-sans);
+  }
+  .main-nav .hot-icon {
+    width: 28px;
+    height: 28px;
+    background: var(--red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+  .main-nav .hot-icon svg {
+    width: 14px;
+    height: 14px;
+    fill: white;
+  }
+  .main-nav a {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--dark);
+    text-decoration: none;
+    text-transform: uppercase;
+    padding: 0 10px;
+    letter-spacing: 0.3px;
+  }
+  .main-nav a.active {
+    color: var(--red);
+  }
+
+  /* === BREADCRUMB === */
+  .breadcrumb {
+    padding: 12px 15px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--gray-light);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .breadcrumb a {
+    color: var(--red);
+    text-decoration: none;
+  }
+  .breadcrumb .sep {
+    color: #ccc;
+    font-size: 10px;
+  }
+
+  /* === GOOGLE NEWS BAR === */
+  .google-news-bar {
+    margin: 0 15px 16px;
+    padding: 10px 16px;
+    background: #f7f7f7;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--gray-text);
+  }
+  .google-news-bar .gn-logo {
+    height: 20px;
+    width: 100px;
+    background: #ccc;
+    border-radius: 3px;
+  }
+
+  /* === ARTICLE === */
+  .article {
+    padding: 0 15px;
+  }
+  .article h1 {
+    font-family: var(--font-serif);
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--dark);
+    margin-bottom: 16px;
+  }
+
+  /* === META === */
+  .article-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  .article-meta .author {
+    font-weight: 700;
+    color: var(--gray-author);
+  }
+  .article-meta .sep {
+    color: #ccc;
+  }
+  .article-meta .date {
+    color: var(--gray-author);
+  }
+
+  /* === SAPO === */
+  .sapo {
+    font-family: var(--font-serif);
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.6;
+    color: var(--dark);
+    margin-bottom: 20px;
+  }
+
+  /* === BODY TEXT === */
+  .article-body p {
+    font-family: var(--font-serif);
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--dark);
+    margin-bottom: 20px;
+  }
+
+  /* === FIGURE === */
+  .article-body figure {
+    margin: 24px 0;
+  }
+  .article-body figure .img-placeholder {
+    width: 100%;
+    background: #d0d0d0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    border-radius: 2px;
+  }
+  .article-body figcaption {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--gray-text);
+    text-align: center;
+    margin-top: 8px;
+    padding: 0 4px;
+  }
+  .article-body figcaption em {
+    font-style: italic;
+  }
+
+  /* === SOCIAL SHARE === */
+  .social-share {
+    display: flex;
+    gap: 12px;
+    padding: 16px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 8px;
+  }
+  .social-share .btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: #fff;
+    text-decoration: none;
+  }
+  .social-share .btn-fb { background: #1877f2; }
+  .social-share .btn-zalo { background: #0068ff; }
+
+  /* === TAGS === */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 16px 0;
+    border-top: 1px solid var(--border);
+  }
+  .tags .tag-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+  .tags a {
+    display: inline-block;
+    padding: 6px 12px;
+    background: var(--bg-tag);
+    border-radius: 4px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--gray-author);
+    text-decoration: none;
+  }
+
+  /* === RELATED BOX === */
+  .related-box {
+    margin: 24px 0;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  .related-box .box-title {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 12px;
+  }
+  .related-box .related-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .related-box .related-item .thumb {
+    width: 140px;
+    height: 90px;
+    background: #d0d0d0;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+  .related-box .related-item .title {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--dark);
+  }
+
+  /* === ĐỌC TIẾP === */
+  .read-more-section {
+    padding: 24px 0;
+  }
+  .read-more-section .section-title {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 16px;
+  }
+  .read-more-section .read-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 16px 0;
+    border-top: 1px solid var(--border);
+  }
+  .read-more-section .read-item .thumb {
+    width: 120px;
+    height: 80px;
+    background: #d0d0d0;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+  .read-more-section .read-item .icon-photo {
+    display: inline-block;
+    margin-right: 4px;
+  }
+  .read-more-section .read-item .title {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--dark);
+  }
+
+  /* === COMMENT BOX === */
+  .comment-box {
+    margin: 16px 0;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  .comment-box textarea {
+    width: 100%;
+    min-height: 60px;
+    border: none;
+    outline: none;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--gray-light);
+    resize: none;
+  }
+  .comment-box .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .comment-box .actions button {
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+  }
+  .comment-box .btn-cancel {
+    background: #f5f5f5;
+    color: var(--gray-text);
+  }
+  .comment-box .btn-send {
+    background: var(--red);
+    color: white;
+  }
+
+  /* === BOTTOM TOOLBAR === */
+  .bottom-toolbar {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 375px;
+    height: 56px;
+    background: var(--bg-white);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    z-index: 100;
+  }
+  .bottom-toolbar .logo-sm {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--red);
+  }
+  .bottom-toolbar .tools {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .bottom-toolbar .font-size-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--gray-text);
+    background: none;
+  }
+  .bottom-toolbar .font-size-btn .aa-sm { font-size: 11px; }
+  .bottom-toolbar .font-size-btn .aa-lg { font-size: 14px; }
+  .bottom-toolbar .icon-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray-text);
+  }
+
+  /* === AD DISPLAY === */
+  .ad-wrapper {
+    margin: 24px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+  .ad-label {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    color: rgb(169,173,178);
+    text-align: center;
+    padding: 4px 0 8px;
+  }
+  .ad-frame {
+    width: 343px;
+    height: 610px;
+    background: #fff;
+    border: 0.5px solid #000;
+    position: relative;
+    overflow: hidden;
+  }
+  .ad-frame video,
+  .ad-frame .video-placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: #1a1a1a;
+    display: block;
+  }
+  /* Play/pause overlay (tap-to-pause state) */
+  .ad-play-overlay {
+    position: absolute;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    cursor: pointer;
+  }
+  .ad-play-overlay.is-visible {
+    display: flex;
+  }
+  /* Top-right: logo + close */
+  .ad-overlay-top-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    gap: 1px;
+    z-index: 2;
+  }
+  .ad-logo-container {
+    width: 24px;
+    height: 24px;
+    background: rgba(255,255,255,0.6);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ad-close-btn {
+    width: 24px;
+    height: 24px;
+    background: rgba(255,255,255,0.6);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  /* Mid: volume (left) + đóng QC (flush right) */
+  .ad-overlay-mid {
+    position: absolute;
+    top: 64px;
+    left: 0;
+    width: 100%;
+    padding-left: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    z-index: 2;
+  }
+  .ad-volume-btn {
+    width: 32px;
+    height: 32px;
+    background: rgba(0,0,0,0.6);
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .ad-dong-qc {
+    width: 64px;
+    height: 30px;
+    padding: 6px;
+    background: rgba(0,0,0,0.6);
+    border-radius: 4px 0 0 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.95);
+    cursor: pointer;
+  }
+  /* Bottom info bar */
+  .ad-info-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 16px 16px 19px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 2;
+    background: linear-gradient(to bottom, rgba(20,20,20,0) 0%, rgba(20,20,20,0.7) 30%, #141414 100%);
+  }
+  .ad-brand-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 0.67px solid #000;
+    background: #d0d0d0;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .ad-brand-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .ad-brand-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .ad-brand-name {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 20px;
+    color: rgba(255,255,255,0.95);
+  }
+  .ad-brand-desc {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    color: rgba(255,255,255,0.6);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .ad-cta-btn {
+    flex-shrink: 0;
+    width: 96px;
+    height: 32px;
+    border-radius: 16px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 500;
+    color: #0d0d0d;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  /* Progress bar */
+  .ad-progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: rgba(255,255,255,0.45);
+    z-index: 3;
+  }
+  .ad-progress-bar .fill {
+    width: 0%;
+    height: 3px;
+    background: rgba(255,255,255,1);
+  }
+  .ad-volume-btn .icon-unmuted {
+    display: none;
+  }
+  .ad-volume-btn.is-unmuted .icon-muted {
+    display: none;
+  }
+  .ad-volume-btn.is-unmuted .icon-unmuted {
+    display: block;
+  }
+</style>
+</head>
+<body>
+
+<!-- BANNER AD -->
+<div class="banner-ad">Quảng cáo 375×125</div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+  <div class="logo">Hànộimới</div>
+  <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2">
+    <circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/>
+  </svg>
+</div>
+
+<!-- NAV -->
+<nav class="main-nav">
+  <div class="hot-icon">
+    <svg viewBox="0 0 24 24"><path d="M12 23c-4.97 0-9-3.58-9-8 0-3.19 2.13-6.08 4-8l1 3c.5-2.5 2.5-5 4-7 1.5 2 3.5 4.5 4 7l1-3c1.87 1.92 4 4.81 4 8 0 4.42-4.03 8-9 8z"/></svg>
+  </div>
+  <a href="#">CHÍNH TRỊ</a>
+  <a href="#">KINH TẾ</a>
+  <a href="#">ĐÔ THỊ</a>
+  <a href="#" class="active">VĂN HÓA</a>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="#">Trang chủ</a>
+  <span class="sep">›</span>
+  <a href="#">Văn hóa</a>
+  <span class="sep">›</span>
+  <span>Thể thao</span>
+</div>
+
+<!-- GOOGLE NEWS BAR -->
+<div class="google-news-bar">
+  <span>Theo dõi Báo Hànộimới trên</span>
+  <div class="gn-logo"></div>
+</div>
+
+<!-- ARTICLE -->
+<article class="article">
+  <h1>Tuyển Việt Nam thiết lập hàng loạt cột mốc sau chức vô địch ASEAN Cup 2026</h1>
+
+  <div class="article-meta">
+    <span class="author">Hoàng Minh</span>
+    <span class="sep">|</span>
+    <span class="date">27/08/2026 - 08:20</span>
+  </div>
+
+  <div class="sapo">
+    Thắng đội tuyển Thái Lan với tổng tỷ số 4-2 sau hai lượt trận chung kết, tuyển Việt Nam bảo vệ thành công chức vô địch ASEAN Cup và đồng thời thiết lập hàng loạt cột mốc đáng nhớ trong lịch sử giải đấu.
+  </div>
+
+  <div class="article-body">
+    <p>Tối 26-8, tuyển Việt Nam hòa Thái Lan 2-2 ở trận chung kết lượt về trên sân Mỹ Đình. Kết quả này giúp thầy trò HLV Kim Sang-sik giành chiến thắng chung cuộc 4-2, sau khi thắng 2-0 ở lượt đi tại sân Rajamangala.</p>
+
+    <figure>
+      <div class="img-placeholder" style="aspect-ratio: 330/198;">Ảnh 1 — 330×198</div>
+      <figcaption>Xuân Son và các đồng đội ăn mừng bên chiếc cúp của giải, tiền đạo của tuyển Việt Nam có hai lần liên tiếp giành chức vô địch. <em>Ảnh: Ngọc Tú</em></figcaption>
+    </figure>
+
+    <p>Chức vô địch ASEAN Cup 2026 đánh dấu lần thứ tư tuyển Việt Nam lên ngôi tại giải đấu, sau các năm 2008, 2018 và 2024. Đáng chú ý nhất, đây là lần đầu tiên đội tuyển quốc gia bảo vệ thành công chức vô địch.</p>
+
+    <p>Trước đó, tuyển Việt Nam từng nhiều lần tiến sâu nhưng chưa thể duy trì ngôi vương ở kỳ giải kế tiếp. HLV Kim Sang-sik đã giúp đội tuyển phá bỏ giới hạn này khi hai lần liên tiếp đánh bại Thái Lan ở chung kết ASEAN Cup 2024 và 2026.</p>
+
+    <!-- AD DISPLAY -->
+    <div class="ad-wrapper">
+      <div class="ad-label">KÉO XUỐNG ĐỂ XEM TIẾP SAU QUẢNG CÁO</div>
+      <div class="ad-frame">
+        <!-- Video creative -->
+        <video id="adVideo" class="video-placeholder" poster="" muted playsinline autoplay>
+          <source src="assets/vinfast_videoad.mp4" type="video/mp4">
+        </video>
+
+        <!-- Play/pause overlay -->
+        <div class="ad-play-overlay" id="adPlayOverlay" role="button" aria-label="Phát video">
+          <svg width="51" height="54" viewBox="0 0 50.8226 53.8938" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g filter="url(#adPlayShadow)">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M17.1313 7.96221C14.7852 6.65869 13.6121 6.00693 12.6521 6.11904C11.8144 6.21685 11.0566 6.66272 10.5643 7.34744C10 8.13221 10 9.47417 10 12.1581V35.8427C10 38.5264 10 39.8682 10.5642 40.653C11.0565 41.3377 11.8143 41.7836 12.6519 41.8814C13.6119 41.9936 14.7849 41.342 17.1309 40.0388L38.4471 28.1976C40.913 26.8278 42.1459 26.1429 42.5551 25.2401C42.9118 24.4531 42.9118 23.5506 42.5552 22.7636C42.1461 21.8607 40.9132 21.1757 38.4475 19.8057L17.1313 7.96221Z" fill="white"/>
+            </g>
+            <defs>
+              <filter id="adPlayShadow" x="2" y="2.10665" width="48.8226" height="51.7872" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                <feOffset dy="4"/>
+                <feGaussianBlur stdDeviation="4"/>
+                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0.0862745 0 0 0 0 0.215686 0 0 0 0.06 0"/>
+                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                <feOffset/>
+                <feGaussianBlur stdDeviation="2"/>
+                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0.0862745 0 0 0 0 0.215686 0 0 0 0.08 0"/>
+                <feBlend mode="normal" in2="effect1_dropShadow" result="effect2_dropShadow"/>
+                <feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow" result="shape"/>
+              </filter>
+            </defs>
+          </svg>
+        </div>
+
+        <!-- Top-right: ad logo + close -->
+        <div class="ad-overlay-top-right">
+          <div class="ad-logo-container">
+            <img src="data:image/png;base64,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" width="16" height="16" alt="" />
+          </div>
+          <div class="ad-close-btn">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M6.42429 5.57576C6.18997 5.34145 5.81007 5.34145 5.57576 5.57576C5.34145 5.81007 5.34145 6.18997 5.57576 6.42429L11.1515 12L5.57576 17.5758C5.34145 17.8101 5.34145 18.19 5.57576 18.4243C5.81007 18.6586 6.18997 18.6586 6.42429 18.4243L12 12.8486L17.5758 18.4243C17.8101 18.6586 18.19 18.6586 18.4243 18.4243C18.6586 18.19 18.6586 17.8101 18.4243 17.5758L12.8486 12L18.4243 6.42429C18.6586 6.18997 18.6586 5.81007 18.4243 5.57576C18.19 5.34145 17.8101 5.34145 17.5758 5.57576L12 11.1515L6.42429 5.57576Z" fill="#6F7071"/></svg>
+          </div>
+        </div>
+
+        <!-- Mid: volume + đóng QC -->
+        <div class="ad-overlay-mid">
+          <div class="ad-volume-btn" id="adVolumeBtn" role="button" aria-label="Bật/tắt tiếng">
+            <svg class="icon-muted" width="20" height="20" viewBox="0 0 20 20" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M17.4369 3.18681C17.6322 2.99154 17.6322 2.67496 17.4369 2.4797C17.2416 2.28444 16.9251 2.28444 16.7298 2.4797L2.9798 16.2297C2.78454 16.425 2.78454 16.7415 2.9798 16.9368C3.17506 17.1321 3.49165 17.1321 3.68691 16.9368L6.30973 14.314L9.66076 17.0459C10.461 17.6983 11.6528 17.1329 11.6528 16.1065V8.97095L13.5688 7.05489C14.3004 7.83613 14.7495 8.87663 14.7495 10.0087C14.7495 11.2175 14.2464 12.3188 13.422 13.1121C13.2143 13.3119 13.208 13.6423 13.4078 13.8501C13.6077 14.0578 13.9381 14.0641 14.1458 13.8642C15.1655 12.883 15.7933 11.5138 15.7933 10.0087C15.7933 8.58273 15.2223 7.28165 14.3072 6.31647L15.3699 5.25383C16.5607 6.49121 17.2895 8.16536 17.2895 10.0087C17.2895 11.8998 16.5224 13.6128 15.2764 14.8588C15.0726 15.0627 15.0726 15.3931 15.2764 15.597C15.4802 15.8008 15.8107 15.8008 16.0145 15.597C17.4477 14.1638 18.3333 12.1886 18.3333 10.0087C18.3333 7.87665 17.4861 5.94042 16.1081 4.51561L17.4369 3.18681ZM11.6528 3.89352V5.80672C11.6528 5.96341 11.5915 6.11389 11.482 6.22598L5.17655 12.6811C5.06365 12.7967 4.90891 12.8619 4.74734 12.8619H4.52854H2.18859C1.90153 12.8619 1.66667 12.627 1.66667 12.3399V7.67745C1.66667 7.39039 1.90153 7.15553 2.18859 7.15553H4.52854L9.66076 2.95406C10.4523 2.30166 11.6528 2.86707 11.6528 3.89352Z" fill="white"/></svg>
+            <svg class="icon-unmuted" width="20" height="20" viewBox="0 0 20 20" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.52854 12.8619H2.18859C1.90153 12.8619 1.66667 12.627 1.66667 12.3399V7.67745C1.66667 7.39039 1.90153 7.15553 2.18859 7.15553H4.52854L9.66076 2.95406C10.4523 2.30166 11.6528 2.86707 11.6528 3.89352V16.1065C11.6528 17.1329 10.461 17.6983 9.66076 17.0459L4.52854 12.8619ZM15.2764 4.42042C15.4802 4.21659 15.8107 4.21659 16.0145 4.42042C17.4477 5.85358 18.3333 7.82878 18.3333 10.0087C18.3333 12.1886 17.4477 14.1638 16.0145 15.597C15.8107 15.8008 15.4802 15.8008 15.2764 15.597C15.0726 15.3931 15.0726 15.0627 15.2764 14.8588C16.5224 13.6128 17.2895 11.8998 17.2895 10.0087C17.2895 8.1176 16.5224 6.40456 15.2764 5.15853C15.0726 4.9547 15.0726 4.62424 15.2764 4.42042ZM14.1476 6.15485C13.9408 5.954 13.6104 5.95879 13.4095 6.16554C13.2087 6.3723 13.2135 6.70273 13.4202 6.90357C14.2392 7.69912 14.7495 8.80187 14.7495 10.0087C14.7495 11.2175 14.2464 12.3188 13.422 13.1121C13.2143 13.3119 13.208 13.6423 13.4078 13.8501C13.6077 14.0578 13.9381 14.0641 14.1458 13.8642C15.1655 12.883 15.7933 11.5138 15.7933 10.0087C15.7933 8.50151 15.1554 7.13384 14.1476 6.15485Z" fill="white"/></svg>
+          </div>
+          <div class="ad-dong-qc" id="adCloseQcBtn" role="button" aria-label="Đóng quảng cáo">Đóng QC</div>
+        </div>
+
+        <!-- Bottom info bar -->
+        <div class="ad-info-bar">
+          <div class="ad-brand-avatar"><img src="assets/vinfast-brand-avatar.png" alt="Vinfast HCM" /></div>
+          <div class="ad-brand-content">
+            <div class="ad-brand-name">Vinfast HCM</div>
+            <div class="ad-brand-desc">Cơ hội sở hữu VF5 Plus với dải màu sắc hấp dẫn...</div>
+          </div>
+          <a class="ad-cta-btn" href="#">Xem thêm</a>
+        </div>
+
+        <!-- Progress bar -->
+        <div class="ad-progress-bar"><div class="fill" id="adProgressFill"></div></div>
+      </div>
+    </div>
+    <!-- END AD DISPLAY -->
+
+    <script>
+      (function () {
+        var video = document.getElementById('adVideo');
+        var volumeBtn = document.getElementById('adVolumeBtn');
+        var progressFill = document.getElementById('adProgressFill');
+        var playOverlay = document.getElementById('adPlayOverlay');
+        var closeQcBtn = document.getElementById('adCloseQcBtn');
+        var adWrapper = document.querySelector('.ad-wrapper');
+
+        closeQcBtn.addEventListener('click', function () {
+          video.pause();
+          adWrapper.remove();
+        });
+
+        volumeBtn.addEventListener('click', function () {
+          video.muted = !video.muted;
+          volumeBtn.classList.toggle('is-unmuted', !video.muted);
+        });
+
+        video.addEventListener('timeupdate', function () {
+          if (!video.duration) return;
+          progressFill.style.width = (video.currentTime / video.duration) * 100 + '%';
+        });
+
+        function resumeVideo() {
+          if (video.ended) {
+            video.currentTime = 0;
+          }
+          video.play();
+        }
+
+        video.addEventListener('click', function () {
+          if (video.paused || video.ended) {
+            resumeVideo();
+          } else {
+            video.pause();
+          }
+        });
+
+        playOverlay.addEventListener('click', resumeVideo);
+
+        video.addEventListener('pause', function () {
+          playOverlay.classList.add('is-visible');
+        });
+        video.addEventListener('play', function () {
+          playOverlay.classList.remove('is-visible');
+        });
+        video.addEventListener('ended', function () {
+          playOverlay.classList.add('is-visible');
+        });
+      })();
+    </script>
+
+    <p>Với 4 lần đăng quang, tuyển Việt Nam đã cân bằng thành tích của Singapore. Thái Lan vẫn dẫn đầu khu vực với 7 chức vô địch. Một dấu ấn khác của đội tuyển là chuỗi trận bất bại được kéo dài dưới thời HLV Kim Sang-sik. Sau trận hòa Thái Lan ở lượt về, tuyển Việt Nam tiếp tục duy trì mạch 26 trận liên tiếp không thua.</p>
+
+    <figure>
+      <div class="img-placeholder" style="aspect-ratio: 330/220;">Ảnh 2 — 330×220</div>
+      <figcaption>Quang Hải trở thành cầu thủ Việt Nam đầu tiên có 3 chức vô địch ASEAN Cup. <em>Ảnh: Ngọc Tú</em></figcaption>
+    </figure>
+
+    <p>Chuỗi thành tích này giúp tuyển Việt Nam vượt qua kỷ lục 21 trận bất bại mà Thái Lan từng thiết lập trong giai đoạn 1995-1996. Đây cũng là minh chứng cho sự ổn định của đội tuyển kể từ khi HLV Kim Sang-sik tiếp quản.</p>
+
+    <p>Ở cấp độ cá nhân, Quang Hải cũng ghi dấu ấn đặc biệt. Sau các lần vô địch năm 2018 và 2024, tiền vệ sinh năm 1997 tiếp tục cùng tuyển Việt Nam đăng quang năm 2026, qua đó trở thành cầu thủ Việt Nam đầu tiên có 3 chức vô địch ASEAN Cup.</p>
+
+    <p>Quang Hải đã san bằng thành tích của nhiều ngôi sao Đông Nam Á từng 3 lần vô địch như Kiatisuk, Chanathip Songkrasin, Theerathon Bunmathan hay Teerasil Dangda. Kỷ lục hiện thuộc về Sarach Yooyen của Thái Lan với 4 lần đăng quang.</p>
+
+    <p>ASEAN Cup 2026 còn chứng kiến cột mốc đặc biệt ở cuộc đua Vua phá lưới. Đình Bắc và Xuân Son cùng ghi 5 bàn, qua đó chia sẻ danh hiệu Vua phá lưới. Đây là lần đầu tiên trong lịch sử ASEAN Cup có hai cầu thủ Việt Nam cùng đứng đầu danh sách ghi bàn tại một kỳ giải. Với Xuân Son, danh hiệu này càng đáng chú ý khi tiếp tục giành Vua phá lưới ở hai kỳ ASEAN Cup liên tiếp.</p>
+
+    <figure>
+      <div class="img-placeholder" style="aspect-ratio: 330/207;">Ảnh 3 — 330×207</div>
+      <figcaption>Đình Bắc cùng Xuân Son nhận giải Vua phá lưới khi có cùng 5 bàn thắng. <em>Ảnh: Ngọc Tú</em></figcaption>
+    </figure>
+
+    <p>Những cột mốc trên cho thấy chức vô địch ASEAN Cup 2026 mang nhiều ý nghĩa hơn một danh hiệu. Tuyển Việt Nam không chỉ bảo vệ thành công ngôi vương mà còn khẳng định vị thế hàng đầu Đông Nam Á, đồng thời mở ra một giai đoạn giàu kỳ vọng dưới sự dẫn dắt của HLV Kim Sang-sik.</p>
+  </div>
+
+  <!-- SOCIAL SHARE -->
+  <div class="social-share">
+    <a class="btn btn-fb" href="#">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      Chia sẻ Facebook
+    </a>
+    <a class="btn btn-zalo" href="#">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.568 8.16c-.18-.438-.52-.766-1.003-.944-.263-.097-.58-.146-.95-.146H9.385c-.37 0-.687.049-.95.146-.483.178-.823.506-1.003.944-.117.284-.176.614-.176.987 0 .373.059.703.176.987.18.438.52.766 1.003.944.263.097.58.146.95.146h6.23c.37 0 .687-.049.95-.146.483-.178.823-.506 1.003-.944.117-.284.176-.614.176-.987 0-.373-.059-.703-.176-.987z"/></svg>
+      Chia sẻ Zalo
+    </a>
+  </div>
+
+  <!-- TAGS -->
+  <div class="tags">
+    <svg class="tag-icon" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5"><path d="M7 7h.01M2 12.585V5.414c0-.516.196-1.014.547-1.397L4.79 1.588c.726-.79 2.017-.79 2.743 0l2.243 2.43A2.087 2.087 0 0110.323 5v7.585a2 2 0 01-.586 1.414l-4.83 4.83a1 1 0 01-1.414 0l-4.83-4.83A2 2 0 012 12.586z" transform="translate(3,1)"/></svg>
+    <a href="#">Tuyển Việt Nam</a>
+    <a href="#">ASEAN Cup 2026</a>
+    <a href="#">Thái Lan</a>
+    <a href="#">HLV Kim Sang-sik</a>
+    <a href="#">Xuân Son</a>
+    <a href="#">Quang Hải</a>
+    <a href="#">Vua phá lưới</a>
+    <a href="#">Rajamangala</a>
+    <a href="#">Singapore</a>
+    <a href="#">ngôi sao Đông Nam Á</a>
+  </div>
+</article>
+
+<!-- BÀI LIÊN QUAN -->
+<div class="article" style="padding-top: 0;">
+  <div class="related-box">
+    <div class="box-title">Bài liên quan</div>
+    <div class="related-item">
+      <div class="thumb"></div>
+      <div class="title">Tuyển Việt Nam vô địch ASEAN Cup 2026, ghi dấu ấn lịch sử tại sân Mỹ Đình</div>
+    </div>
+  </div>
+</div>
+
+<!-- ĐỌC TIẾP -->
+<div class="article" style="padding-top: 0;">
+  <div class="read-more-section">
+    <div class="section-title">Đọc tiếp</div>
+    <div class="read-item">
+      <div class="thumb"></div>
+      <div>
+        <span class="icon-photo">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        </span>
+        <span class="title">Tuyển Việt Nam vô địch ASEAN Cup 2026</span>
+      </div>
+    </div>
+    <div class="read-item">
+      <div class="thumb"></div>
+      <div>
+        <span class="icon-photo">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        </span>
+        <span class="title">Chung kết lượt về ASEAN Cup 2026: Giá vé lên đến 13 triệu đồng/cặp trước giờ bóng lăn</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COMMENT BOX -->
+<div class="article" style="padding-top: 0;">
+  <div class="comment-box">
+    <textarea placeholder="Vui lòng nhập tiếng Việt có dấu"></textarea>
+    <div class="actions">
+      <button class="btn-cancel">Hủy</button>
+      <button class="btn-send">Gửi</button>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM TOOLBAR -->
+<div class="bottom-toolbar">
+  <div class="logo-sm">Hànộimới</div>
+  <div class="tools">
+    <button class="font-size-btn">
+      <span class="aa-sm">a</span><span class="aa-lg">a</span>
+      <span>Cỡ chữ</span>
+    </button>
+    <div class="icon-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+    </div>
+    <div class="icon-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
