@@ -735,12 +735,12 @@
       <div class="ad-label">KÉO XUỐNG ĐỂ XEM TIẾP SAU QUẢNG CÁO</div>
       <div class="ad-frame">
         <!-- Video creative -->
-        <video id="adVideo" class="video-placeholder" poster="" muted playsinline>
+        <video id="adVideo" class="video-placeholder" poster="" muted playsinline preload="auto">
           <source src="assets/vinfast_videoad.mp4" type="video/mp4">
         </video>
 
         <!-- Play/pause overlay -->
-        <div class="ad-play-overlay" id="adPlayOverlay" role="button" aria-label="Phát video">
+        <div class="ad-play-overlay is-visible" id="adPlayOverlay" role="button" aria-label="Phát video">
           <svg width="51" height="54" viewBox="0 0 50.8226 53.8938" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g filter="url(#adPlayShadow)">
               <path fill-rule="evenodd" clip-rule="evenodd" d="M17.1313 7.96221C14.7852 6.65869 13.6121 6.00693 12.6521 6.11904C11.8144 6.21685 11.0566 6.66272 10.5643 7.34744C10 8.13221 10 9.47417 10 12.1581V35.8427C10 38.5264 10 39.8682 10.5642 40.653C11.0565 41.3377 11.8143 41.7836 12.6519 41.8814C13.6119 41.9936 14.7849 41.342 17.1309 40.0388L38.4471 28.1976C40.913 26.8278 42.1459 26.1429 42.5551 25.2401C42.9118 24.4531 42.9118 23.5506 42.5552 22.7636C42.1461 21.8607 40.9132 21.1757 38.4475 19.8057L17.1313 7.96221Z" fill="white"/>
@@ -809,6 +809,24 @@
         var playOverlay = document.getElementById('adPlayOverlay');
         var closeQcBtn = document.getElementById('adCloseQcBtn');
         var adWrapper = document.querySelector('.ad-wrapper');
+        video.muted = true;
+
+        // iOS Safari can silently reject play() on a cold/first load (not
+        // enough buffered data yet at the exact moment the ad enters the
+        // viewport). Track intent + retry on buffering progress instead of
+        // firing play() once and giving up.
+        var inViewport = false;
+        var userPaused = false;
+
+        function attemptAutoplay() {
+          if (!inViewport || userPaused) return;
+          var playPromise = video.play();
+          if (playPromise && playPromise.catch) {
+            playPromise.catch(function () {
+              // Will retry on the next 'loadeddata'/'canplay' tick below.
+            });
+          }
+        }
 
         closeQcBtn.addEventListener('click', function () {
           video.pause();
@@ -826,6 +844,7 @@
         });
 
         function resumeVideo() {
+          userPaused = false;
           if (video.ended) {
             video.currentTime = 0;
           }
@@ -836,6 +855,7 @@
           if (video.paused || video.ended) {
             resumeVideo();
           } else {
+            userPaused = true;
             video.pause();
           }
         });
@@ -855,11 +875,17 @@
         // Start playback as soon as even 1px of the ad enters the viewport.
         var startObserver = new IntersectionObserver(function (entries) {
           if (entries[0].isIntersecting) {
-            video.play();
+            inViewport = true;
+            attemptAutoplay();
             startObserver.disconnect();
           }
         }, { threshold: 0 });
         startObserver.observe(adWrapper);
+
+        // Safety-net retries: if the first attempt was rejected because the
+        // video hadn't buffered enough yet, try again as more data arrives.
+        video.addEventListener('loadeddata', attemptAutoplay);
+        video.addEventListener('canplay', attemptAutoplay);
       })();
     </script>
 
