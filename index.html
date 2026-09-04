@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Khách sạn đang kiếm bộn tiền từ những người du lịch để đọc sách - Tạp chí Tri thức</title>
+<style>
+  :root {
+    --dark: #292929;
+    --primary: #4a90d9;
+    --text-body: #2F3133;
+    --text-gray: #666;
+    --text-light: #999;
+    --border: #f0f0f0;
+    --bg-tag: #f7f7f7;
+    --tts-color: #2FA1B3;
+    --tts-bg: rgba(47,161,179,0.1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: #fff;
+    color: var(--text-body);
+    width: 375px;
+    max-width: 375px;
+    margin: 0 auto;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== HEADER ===== */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+  }
+  .header-logo {
+    height: 36px;
+    width: auto;
+  }
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .header-weather {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-gray);
+  }
+  .header-weather-icon { width: 24px; height: 24px; }
+  .header-user-icon {
+    width: 24px; height: 24px;
+    color: var(--text-light);
+  }
+
+  /* ===== NAV ===== */
+  .nav {
+    display: flex;
+    align-items: center;
+    background: #2b5ea7;
+    padding: 0 12px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav a {
+    display: block;
+    padding: 10px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+    position: relative;
+  }
+  .nav a:hover { color: #fff; }
+  .nav .badge {
+    position: absolute;
+    top: 6px; right: 4px;
+    background: #e74c3c;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 8px;
+    padding: 1px 5px;
+    line-height: 1.2;
+  }
+
+  /* ===== BREADCRUMB ===== */
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 16px 0;
+    font-size: 12px;
+    color: var(--text-gray);
+  }
+  .breadcrumb a {
+    color: #2b7bb9;
+    text-decoration: none;
+  }
+  .breadcrumb .sep {
+    font-size: 10px;
+    color: #bbb;
+  }
+
+  /* ===== ARTICLE ===== */
+  .article {
+    padding: 0 16px;
+  }
+  .article h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1.35;
+    margin: 14px 0 12px;
+    letter-spacing: -0.5px;
+  }
+  .article .sapo {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+
+  /* ===== META ===== */
+  .content-meta {
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    color: var(--text-gray);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 0;
+    margin-bottom: 16px;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .source-badge {
+    display: flex;
+    align-items: center;
+    height: 32px;
+    border-radius: 999px;
+    padding: 0 12px;
+    background: var(--bg-tag);
+    gap: 8px;
+  }
+  .source-badge img {
+    height: 12px;
+    width: auto;
+    opacity: 0.8;
+  }
+  .source-badge .follow-btn {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: #e8e8e8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: var(--text-light);
+    cursor: pointer;
+  }
+  .meta-time { white-space: nowrap; }
+  .meta-origin {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--text-gray);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .meta-origin svg { width: 14px; height: 14px; fill: var(--text-gray); }
+
+  /* ===== TTS PLAYER ===== */
+  .tts-player {
+    display: flex;
+    align-items: center;
+    height: 32px;
+    background: var(--tts-bg);
+    border-radius: 999px;
+    padding: 0 8px;
+    margin-left: auto;
+    gap: 6px;
+  }
+  .tts-player svg { flex-shrink: 0; }
+  .tts-label {
+    font-size: 13px;
+    color: var(--tts-color);
+    white-space: nowrap;
+  }
+  .tts-time {
+    font-size: 11px;
+    color: var(--tts-color);
+  }
+  .tts-speed {
+    font-size: 11px;
+    color: var(--tts-color);
+    background: rgba(47,161,179,0.15);
+    border-radius: 4px;
+    padding: 2px 6px;
+  }
+
+  /* ===== BODY CONTENT ===== */
+  .content-body {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--text-body);
+    margin-top: 8px;
+  }
+  .content-body p {
+    margin-bottom: 20px;
+  }
+  .content-body strong {
+    font-weight: 700;
+  }
+  .content-body em {
+    font-style: italic;
+  }
+  .content-body a.tag-link {
+    color: #2b7bb9;
+    text-decoration: none;
+  }
+
+  /* ===== IMAGES ===== */
+  .image-wrapper {
+    position: relative;
+    margin: 24px -16px;
+    background: #e9ecef;
+  }
+  .image-wrapper img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .image-caption {
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-gray);
+    padding: 8px 16px 4px;
+  }
+
+  /* ===== AUTHOR / SOCIAL ===== */
+  .author-social {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 8px;
+    padding-top: 16px;
+  }
+  .social-buttons {
+    display: flex;
+    gap: 8px;
+  }
+  .social-btn {
+    width: 28px; height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid #DEE2E6;
+    background: none;
+    cursor: pointer;
+    color: #4D4D4D;
+    font-size: 14px;
+  }
+  .social-btn:hover { color: var(--primary); border-color: var(--primary); }
+  .author-name {
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--text-body);
+  }
+
+  /* ===== TAGS ===== */
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 20px 0;
+    padding: 16px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    gap: 0;
+  }
+  .tag-item {
+    font-size: 13px;
+    color: #ADB5BD;
+    text-decoration: none;
+    padding: 0 6px;
+  }
+  .tag-item:hover { color: var(--primary); }
+  .tag-item + .tag-item { border-left: 1px solid #DEE2E6; }
+
+  /* ===== SOURCE LINK ===== */
+  .source-link {
+    font-size: 13px;
+    color: var(--text-light);
+    padding: 16px 0;
+    border-top: 1px solid var(--border);
+    line-height: 1.6;
+  }
+  .source-link a {
+    color: var(--text-light);
+    text-decoration: none;
+    word-break: break-all;
+  }
+
+  /* ===== AD TEMPLATE ===== */
+  .ad-separator {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 20px 0;
+  }
+  .ad-wrapper {
+    padding: 0 20px;
+  }
+  .ad-card {
+    width: 100%;
+    background: #fff;
+    border: 0.5px solid rgba(0,0,0,0.15);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .ad-hero {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 343 / 193;
+    overflow: hidden;
+    background: #e9ecef;
+  }
+  .ad-hero img,
+  .ad-hero video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+  }
+  .ad-play-overlay {
+    position: absolute;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    cursor: pointer;
+  }
+  .ad-play-overlay.is-visible {
+    display: flex;
+  }
+  .ad-hero-sound {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    width: 32px;
+    height: 32px;
+    background: rgba(0,0,0,0.6);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    cursor: pointer;
+  }
+  .ad-hero-sound svg {
+    width: 20px;
+    height: 20px;
+    fill: #fff;
+  }
+  .ad-hero-sound .icon-unmuted { display: none; }
+  .ad-hero-sound.is-unmuted .icon-muted { display: none; }
+  .ad-hero-sound.is-unmuted .icon-unmuted { display: block; }
+  .ad-hero-top {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    gap: 1px;
+    z-index: 3;
+  }
+  .ad-hero-top-btn {
+    width: 24px;
+    height: 24px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ad-hero-top-btn img {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+  }
+  .ad-hero-top-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+  .ad-progress {
+    width: 100%;
+    height: 3px;
+    background: #E0E3E5;
+    position: relative;
+  }
+  .ad-progress-active {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background: #fff;
+  }
+  .ad-brand {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    padding: 12px;
+  }
+  .ad-brand-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    object-fit: cover;
+  }
+  .ad-brand-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .ad-brand-text {
+    flex: 1;
+    min-width: 0;
+  }
+  .ad-brand-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: #0D0D0D;
+    line-height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .ad-brand-desc {
+    font-size: 12px;
+    font-weight: 400;
+    color: #6F7071;
+    line-height: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .ad-cta {
+    flex-shrink: 0;
+    background: #0068FF;
+    color: #fff;
+    border: none;
+    border-radius: 16px;
+    padding: 7px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  /* ===== NÓNG 24H SECTION ===== */
+  .hot-section {
+    margin: 24px 16px 32px;
+  }
+  .hot-section-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 16px;
+    line-height: 1.2;
+    border-left: 4px solid #e74c3c;
+    padding-left: 12px;
+  }
+  .hot-list {
+    
+    
+    padding: 0;
+  }
+  .hot-card {
+    display: flex;
+    width: 100%;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .hot-card + .hot-card {
+    border-top: 1px solid #e9ecef;
+    margin-top: 16px;
+    padding-top: 16px;
+  }
+  .hot-card-thumb {
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: #e9ecef;
+  }
+  .hot-card-body {
+    flex: 1;
+    min-width: 0;
+  }
+  .hot-card-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--dark);
+    line-height: 1.4;
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .hot-card-title a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .hot-card-title a:hover { color: var(--primary); }
+  .hot-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-light);
+  }
+  .hot-card-source {
+    font-size: 11px;
+    color: var(--text-light);
+  }
+  .hot-card-time {
+    font-size: 11px;
+    color: var(--text-light);
+  }
+  .hot-card-time::before {
+    content: '·';
+    margin-right: 8px;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <img class="header-logo" src="https://baomoi-static.bmcdn.me/web/styles/img/bm-logo-v3.png" alt="Báo Mới">
+  <div class="header-right">
+    <div class="header-weather">
+      <img class="header-weather-icon" src="https://baomoi-static.bmcdn.me/infoservice/images/weathericons/set62/28.svg" alt="">
+      <div>
+        <div style="font-size:12px;font-weight:600;margin-bottom:2px;">TP. Hồ Chí Minh</div>
+        <span style="font-size:11px;color:#6E7375;">32ºC / 26ºC - 33ºC</span>
+      </div>
+    </div>
+    <!-- User icon -->
+    <svg class="header-user-icon" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5">
+      <circle cx="12" cy="8" r="4"/>
+      <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+    </svg>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <a href="#">NÓNG</a>
+  <a href="#" style="position:relative;">MỚI<span class="badge">39</span></a>
+  <a href="#">VIDEO</a>
+  <a href="#">CHỦ ĐỀ</a>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="#">Văn hóa</a>
+  <span class="sep">›</span>
+  <span>Du lịch</span>
+</div>
+
+<!-- ARTICLE -->
+<div class="article">
+  <h1>Khách sạn đang kiếm bộn tiền từ những người du lịch để đọc sách</h1>
+
+  <p class="sapo">Thay vì kín lịch tham quan, nhiều du khách chọn đến khách sạn, tạm rời điện thoại và dành phần lớn kỳ nghỉ để đọc sách.</p>
+
+  <!-- META -->
+  <div class="content-meta">
+    <div class="source-badge">
+      <img src="https://photo-baomoi.bmcdn.me/ea0ddced99a670f829b7.png" alt="Tạp chí Tri thức">
+      <div class="follow-btn">+</div>
+    </div>
+    <span class="meta-time">1 giờ trước</span>
+    <a class="meta-origin" href="#">
+      <svg viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2" fill="none"/><line x1="8" y1="5" x2="8" y2="11" stroke="currentColor" stroke-width="1.2"/><line x1="5" y1="8" x2="11" y2="8" stroke="currentColor" stroke-width="1.2"/></svg>
+      Gốc
+    </a>
+
+    <!-- TTS Player -->
+    <div class="tts-player">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="11.5" stroke="#2FA1B3" stroke-opacity="0.3"/>
+        <path d="M10.33 8.13L15.58 11.27C15.85 11.45 15.99 11.69 16 12C15.99 12.32 15.85 12.56 15.58 12.73L10.33 15.87C10.04 16.04 9.75 16.04 9.46 15.89C9.16 15.72 9.01 15.47 9 15.14V8.86C9.01 8.53 9.16 8.28 9.46 8.11C9.75 7.96 10.04 7.96 10.33 8.13Z" fill="#2FA1B3"/>
+      </svg>
+      <span class="tts-label">Nghe bài đọc</span>
+      <span class="tts-time">3:33</span>
+      <span class="tts-speed">1.0x</span>
+      <svg width="16" height="15" viewBox="0 0 16 15" fill="none">
+        <path opacity="0.4" d="M0.44 14.12C0.69 14.12 0.89 13.92 0.89 13.68V13.24C0.89 11.04 2.68 9.26 4.89 9.26H7.56C7.64 9.26 7.71 9.27 7.79 9.27C7.64 9.53 7.56 9.83 7.56 10.15V10.59C7.56 11.98 8.14 13.23 9.08 14.12H0.44ZM8.89 3.53C8.89 4.47 8.51 5.36 7.85 6.03C7.18 6.69 6.28 7.06 5.33 7.06C4.39 7.06 3.49 6.69 2.82 6.03C2.16 5.36 1.78 4.47 1.78 3.53C1.78 2.59 2.16 1.7 2.82 1.03C3.49 0.37 4.39 0 5.33 0C6.28 0 7.18 0.37 7.85 1.03C8.51 1.7 8.89 2.59 8.89 3.53Z" fill="#2FA1B3"/>
+        <path d="M12.44 6.18C13.43 6.18 14.22 6.97 14.22 7.94V10.59C14.22 11.56 13.43 12.35 12.44 12.35C11.46 12.35 10.67 11.56 10.67 10.59V7.94C10.67 6.97 11.46 6.18 12.44 6.18ZM16 10.15V10.59C16 12.39 14.64 13.87 12.89 14.09V14.56C12.89 14.8 12.69 15 12.44 15C12.2 15 12 14.8 12 14.56V14.09C10.25 13.87 8.89 12.39 8.89 10.59V10.15C8.89 9.9 9.09 9.71 9.33 9.71C9.58 9.71 9.78 9.9 9.78 10.15V10.59C9.78 12.05 10.97 13.24 12.44 13.24C13.92 13.24 15.11 12.05 15.11 10.59V10.15C15.11 9.9 15.31 9.71 15.56 9.71C15.8 9.71 16 9.9 16 10.15Z" fill="#2FA1B3"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- BODY CONTENT -->
+  <div class="content-body">
+    <div class="image-wrapper">
+      <img src="https://photo-baomoi.bmcdn.me/w700_r1/2026_09_04_119_55974270/eaf47de8c0a329fd70b2.jpg" alt="Sách hiện diện ngày càng nhiều trong các kỳ nghỉ, phòng lưu trú." width="700" height="467">
+    </div>
+    <p class="image-caption">Sách hiện diện ngày càng nhiều trong các kỳ nghỉ, phòng lưu trú. Ảnh: Ron Lach/Pexels.</p>
+
+    <p>Một kỳ nghỉ thường được lấp đầy bằng điểm đến, bữa ăn và những trải nghiệm nối tiếp. Nhưng tại một số khách sạn, du khách chỉ cần nhận phòng, chọn một góc ngồi thoải mái, mở sách và dành phần lớn thời gian để đọc.</p>
+
+    <p>Những chuyến đi như vậy được gọi là "reading retreat" (kỳ nghỉ dành cho việc đọc) hay "readaway" - cách chơi chữ từ "read" và "getaway". Khác với việc mang vài cuốn sách theo hành lý để đọc lúc rảnh, đọc sách trở thành mục đích chính của chuyến đi.</p>
+
+    <p>Theo <em>National Geographic</em>, "reading retreat" đang tăng sức hút và "readaway" được dự báo là một trong những xu hướng đáng chú ý của <a class="tag-link" href="#">du lịch</a> năm 2026. Một khảo sát do nền tảng cho thuê nhà nghỉ dưỡng Vrbo công bố, 91% người được hỏi quan tâm đến những chuyến đi xoay quanh đọc sách, thư giãn và dành thời gian chất lượng bên người thân.</p>
+
+    <p>Dữ liệu của Vrbo cũng cho thấy lượng đề cập đến các từ khóa liên quan tới đọc sách trong đánh giá của khách lưu trú tăng 285% so với cùng kỳ. Trong khi đó, lượt tìm kiếm "book retreats" trên Pinterest tăng 100%, còn "book club retreat ideas" (ý tưởng tổ chức kỳ nghỉ cho câu lạc bộ sách) tăng 265%.</p>
+
+    <div class="image-wrapper">
+      <img src="https://photo-baomoi.bmcdn.me/w700_r1/2026_09_04_119_55974270/8ed41ec8a3834add1392.jpg" alt="Kỳ nghỉ không chỉ là lúc nghỉ ngơi mà còn là dịp nhiều du khách quay lại với thói quen đọc sách." width="700" height="467">
+    </div>
+    <p class="image-caption">Kỳ nghỉ không chỉ là lúc nghỉ ngơi mà còn là dịp nhiều du khách quay lại với thói quen đọc sách. Ảnh: Jay-r Alvarez/Pexels.</p>
+
+    <p><strong>Trả tiền để đọc sách</strong></p>
+
+    <p>Sức hút của loại hình này nằm ở sự tối giản. Thay vì bán cho khách một lịch trình dày đặc, khách sạn tạo ra khoảng thời gian mà việc "không làm gì" được xem là một phần của trải nghiệm.</p>
+
+    <p>Tại University Arms Hotel ở Cambridge (Anh), gói "Stay for the Story: A Reading Retreat" (Ở lại cùng những trang sách) được triển khai cho các kỳ lưu trú từ tháng 2 đến đầu tháng 11/2026. Chương trình kéo dài 2 đêm, hướng đến việc giúp khách tạm ngắt kết nối kỹ thuật số và tập trung hoàn toàn vào việc đọc.</p>
+
+    <p>Điểm đặc biệt là khách có thể giao điện thoại cho "Book Butler" - nhân viên phụ trách trải nghiệm sách - trong thời gian lưu trú. Gói nghỉ còn gồm danh sách sách được tuyển chọn, nhật ký đọc, tư vấn với Book Butler, đồ uống trong thư viện vào những khung giờ đọc riêng và trả phòng muộn.</p>
+
+    <div class="image-wrapper">
+      <img src="https://photo-baomoi.bmcdn.me/w700_r1/2026_09_04_119_55974270/fc7e6e62d3293a776338.jpg" alt="Gói Stay for the Story: A Reading Retreat được University Arms Hotel triển khai." width="700" height="467">
+    </div>
+    <p class="image-caption">Gói "Stay for the Story: A Reading Retreat" (Ở lại cùng những trang sách) được University Arms Hotel (Anh) triển khai từ đầu năm nay. Ảnh: University Arms Hotel.</p>
+
+    <p>Ở Mỹ, Lake Austin Spa Resort tại Texas đưa ra chương trình "Silent Shores Reading Retreat" trong năm 2026. Thay vì kín lịch hoạt động, chương trình chủ động dành những khoảng thời gian dài cho khách đọc sách bên hồ.</p>
+
+    <p>Xen giữa các phiên đọc là yoga, thiền, trò chuyện với tác giả hay workshop thiết kế giá sách. Chương trình ba đêm có giá lưu trú khởi điểm khoảng 1.100 USD/đêm, tùy loại phòng.</p>
+
+    <p>Điểm chung của những sản phẩm này là khách sạn không nhất thiết phải tạo thêm thật nhiều hoạt động. Thứ họ bán chính là điều kiện để khách có thể đọc mà ít bị gián đoạn, đó là phòng yên tĩnh, thư viện, ghế đọc, thiên nhiên, những khoảng trống trong lịch trình và đôi khi cả việc tạm rời điện thoại.</p>
+
+    <p><strong>Nghỉ dưỡng chậm lên ngôi</strong></p>
+
+    <p>"Reading retreat" phát triển trong bối cảnh nhiều du khách tìm kiếm những chuyến đi chậm hơn và ít phụ thuộc vào màn hình.</p>
+
+    <p>Theo <em>National Geographic</em>, các công ty chuyên tổ chức hành trình liên quan đến sách có những chương trình hết chỗ chỉ trong thời gian ngắn. Dữ liệu từ Google cho biết lượt tìm kiếm "book retreats" đạt mức cao nhất từ trước đến nay vào cuối năm 2025, trong khi "reading weekend" trở thành một trong những cụm từ du lịch nổi lên trong năm 2026.</p>
+
+    <p>Điều đáng chú ý là người tham gia không nhất thiết phải đọc cùng một cuốn hay thảo luận sách theo kiểu câu lạc bộ truyền thống. Nhiều kỳ nghỉ dành phần lớn thời gian để khách tự lựa chọn, như đọc một mình, trò chuyện với những người cùng sở thích hoặc tham gia một số hoạt động nhẹ như yoga, đi bộ và gặp tác giả.</p>
+
+    <div class="image-wrapper">
+      <img src="https://photo-baomoi.bmcdn.me/w700_r1/2026_09_04_119_55974270/effc43e0feab17f54eba.jpg" alt="Ngoài gói chuyên biệt, nhiều khách sạn bán lẻ dịch vụ đọc sách." width="700" height="467">
+    </div>
+    <p class="image-caption">Ngoài gói chuyên biệt, nhiều khách sạn bán lẻ dịch vụ đọc sách để đa dạng trải nghiệm và tệp khách. Ảnh: Cottonbro studio/Pexels.</p>
+
+    <p>Vì thế, sản phẩm mà khách sạn bán không hoàn toàn là sách. Thứ có giá trị hơn là thời gian và không gian để đọc. Hai điều tưởng đơn giản nhưng ngày càng khó tìm trong nhịp sống thường ngày.</p>
+
+    <p>Melanie Fish, Phó chủ tịch truyền thông của Expedia Group, cũng phân biệt "readaway" với việc đơn thuần mang một chồng sách theo trong kỳ nghỉ. Theo bà, đây là những chuyến đi nghỉ thực sự được xây dựng quanh việc đọc, nơi trải nghiệm có thể diễn ra trong một góc thư viện yên tĩnh, trên xích đu ngoài hiên hay chiếc ghế dài cạnh hồ bơi.</p>
+
+    <!-- Author & Social -->
+    <div class="author-social">
+      <div class="social-buttons">
+        <button class="social-btn" title="Chia sẻ qua Facebook">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+        </button>
+        <button class="social-btn" title="Thích">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3H14zM7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/></svg>
+        </button>
+        <button class="social-btn" title="Lưu tin">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+        </button>
+        <button class="social-btn" title="Báo lỗi">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </button>
+      </div>
+      <span class="author-name">Quỳnh Trang</span>
+    </div>
+
+    <!-- Tags -->
+    <div class="tag-list">
+      <a class="tag-item" href="#">đọc sách</a>
+      <a class="tag-item" href="#">Vrbo</a>
+      <a class="tag-item" href="#">kỳ nghỉ</a>
+      <a class="tag-item" href="#">bộn</a>
+      <a class="tag-item" href="#">khách sạn</a>
+      <a class="tag-item" href="#">Stay</a>
+      <a class="tag-item" href="#">Butler</a>
+      <a class="tag-item" href="#">Ideas</a>
+      <a class="tag-item" href="#">Read</a>
+      <a class="tag-item" href="#">Expedia Group</a>
+    </div>
+
+    <!-- Source -->
+    <div class="source-link">
+      Nguồn Znews: <a href="https://znews.vn/khach-san-dang-kiem-bon-tien-tu-nhung-nguoi-du-lich-de-doc-sach-post1680458.html">https://znews.vn/khach-san-dang-kiem-bon-tien-tu-nhung-nguoi-du-lich-de-doc-sach-post1680458.html</a>
+    </div>
+  </div>
+</div>
+
+<!-- AD TEMPLATE [Figma source: node 3031:2230 — đã xóa khỏi file gốc] -->
+<hr class="ad-separator">
+<div class="ad-wrapper">
+  <div class="ad-card">
+    <!-- Hero video [Figma-verified: aspect 343:193] -->
+    <div class="ad-hero">
+      <video id="adVideo" src="assets/global-video.mp4" muted loop playsinline></video>
+      <!-- Play overlay [Figma-verified node 3047:157: zic_24/zic_play_solid_24] -->
+      <div class="ad-play-overlay" id="adPlayOverlay" role="button" aria-label="Phát video">
+        <svg width="51" height="54" viewBox="0 0 50.8226 53.8938" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g filter="url(#adPlayShadow)">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M17.1313 7.96221C14.7852 6.65869 13.6121 6.00693 12.6521 6.11904C11.8144 6.21685 11.0566 6.66272 10.5643 7.34744C10 8.13221 10 9.47417 10 12.1581V35.8427C10 38.5264 10 39.8682 10.5642 40.653C11.0565 41.3377 11.8143 41.7836 12.6519 41.8814C13.6119 41.9936 14.7849 41.342 17.1309 40.0388L38.4471 28.1976C40.913 26.8278 42.1459 26.1429 42.5551 25.2401C42.9118 24.4531 42.9118 23.5506 42.5552 22.7636C42.1461 21.8607 40.9132 21.1757 38.4475 19.8057L17.1313 7.96221Z" fill="white"/>
+          </g>
+          <defs>
+            <filter id="adPlayShadow" x="2" y="2.10665" width="48.8226" height="51.7872" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+              <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+              <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+              <feOffset dy="4"/>
+              <feGaussianBlur stdDeviation="4"/>
+              <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0.0862745 0 0 0 0 0.215686 0 0 0 0.06 0"/>
+              <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+              <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+              <feOffset/>
+              <feGaussianBlur stdDeviation="2"/>
+              <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0.0862745 0 0 0 0 0.215686 0 0 0 0.08 0"/>
+              <feBlend mode="normal" in2="effect1_dropShadow" result="effect2_dropShadow"/>
+              <feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow" result="shape"/>
+            </filter>
+          </defs>
+        </svg>
+      </div>
+      <!-- Sound/Mute button [Figma-verified node 2999:6883: Mute & unmute, default = muted] -->
+      <div class="ad-hero-sound" id="adVolumeBtn" role="button" aria-label="Bật/tắt tiếng">
+        <svg class="icon-muted" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M17.4369 3.18681C17.6322 2.99154 17.6322 2.67496 17.4369 2.4797C17.2416 2.28444 16.9251 2.28444 16.7298 2.4797L2.9798 16.2297C2.78454 16.425 2.78454 16.7415 2.9798 16.9368C3.17506 17.1321 3.49165 17.1321 3.68691 16.9368L6.30973 14.314L9.66076 17.0459C10.461 17.6983 11.6528 17.1329 11.6528 16.1065V8.97095L13.5688 7.05489C14.3004 7.83613 14.7495 8.87663 14.7495 10.0087C14.7495 11.2175 14.2464 12.3188 13.422 13.1121C13.2143 13.3119 13.208 13.6423 13.4078 13.8501C13.6077 14.0578 13.9381 14.0641 14.1458 13.8642C15.1655 12.883 15.7933 11.5138 15.7933 10.0087C15.7933 8.58273 15.2223 7.28165 14.3072 6.31647L15.3699 5.25383C16.5607 6.49121 17.2895 8.16536 17.2895 10.0087C17.2895 11.8998 16.5224 13.6128 15.2764 14.8588C15.0726 15.0627 15.0726 15.3931 15.2764 15.597C15.4802 15.8008 15.8107 15.8008 16.0145 15.597C17.4477 14.1638 18.3333 12.1886 18.3333 10.0087C18.3333 7.87665 17.4861 5.94042 16.1081 4.51561L17.4369 3.18681ZM11.6528 3.89352V5.80672C11.6528 5.96341 11.5915 6.11389 11.482 6.22598L5.17655 12.6811C5.06365 12.7967 4.90891 12.8619 4.74734 12.8619H4.52854H2.18859C1.90153 12.8619 1.66667 12.627 1.66667 12.3399V7.67745C1.66667 7.39039 1.90153 7.15553 2.18859 7.15553H4.52854L9.66076 2.95406C10.4523 2.30166 11.6528 2.86707 11.6528 3.89352Z" fill="white"/>
+        </svg>
+        <svg class="icon-unmuted" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M4.52854 12.8619H2.18859C1.90153 12.8619 1.66667 12.627 1.66667 12.3399V7.67745C1.66667 7.39039 1.90153 7.15553 2.18859 7.15553H4.52854L9.66076 2.95406C10.4523 2.30166 11.6528 2.86707 11.6528 3.89352V16.1065C11.6528 17.1329 10.461 17.6983 9.66076 17.0459L4.52854 12.8619ZM15.2764 4.42042C15.4802 4.21659 15.8107 4.21659 16.0145 4.42042C17.4477 5.85358 18.3333 7.82878 18.3333 10.0087C18.3333 12.1886 17.4477 14.1638 16.0145 15.597C15.8107 15.8008 15.4802 15.8008 15.2764 15.597C15.0726 15.3931 15.0726 15.0627 15.2764 14.8588C16.5224 13.6128 17.2895 11.8998 17.2895 10.0087C17.2895 8.1176 16.5224 6.40456 15.2764 5.15853C15.0726 4.9547 15.0726 4.62424 15.2764 4.42042ZM14.1476 6.15485C13.9408 5.954 13.6104 5.95879 13.4095 6.16554C13.2087 6.3723 13.2135 6.70273 13.4202 6.90357C14.2392 7.69912 14.7495 8.80187 14.7495 10.0087C14.7495 11.2175 14.2464 12.3188 13.422 13.1121C13.2143 13.3119 13.208 13.6423 13.4078 13.8501C13.6077 14.0578 13.9381 14.0641 14.1458 13.8642C15.1655 12.883 15.7933 11.5138 15.7933 10.0087C15.7933 8.50151 15.1554 7.13384 14.1476 6.15485Z" fill="white"/>
+        </svg>
+      </div>
+      <!-- Logo + Close [Figma-verified: 24x24 each, bg white] -->
+      <div class="ad-hero-top">
+        <div class="ad-hero-top-btn" style="position:relative;">
+          <img src="assets/ad/logo.png" alt="Ad logo" style="width:16px;height:16px;position:absolute;top:4px;left:4px;">
+        </div>
+        <div class="ad-hero-top-btn">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M4.5 4.5l7 7M11.5 4.5l-7 7" stroke="#333" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <!-- Progress bar [Figma-verified: 3px, bg #E0E3E5] driven by real video playback -->
+    <div class="ad-progress">
+      <div class="ad-progress-active" id="adProgressFill"></div>
+    </div>
+    <!-- Brand Identity [Figma-verified] -->
+    <div class="ad-brand">
+      <img class="ad-brand-avatar" src="assets/ad/brand-avatar.png" alt="Đông Tây Land">
+      <div class="ad-brand-content">
+        <div class="ad-brand-text">
+          <div class="ad-brand-name">Đông Tây Land</div>
+          <div class="ad-brand-desc">Nhận nhà 2026, ưu đãi khủng 200 triệu khi booking sớm trong tháng này</div>
+        </div>
+        <button class="ad-cta">Xem thêm</button>
+      </div>
+    </div>
+  </div>
+</div>
+<hr class="ad-separator">
+
+<!-- NÓNG 24H -->
+<div class="hot-section">
+  <h2 class="hot-section-title">Nóng 24H</h2>
+  <div class="hot-list">
+
+    <div class="hot-card">
+      <img class="hot-card-thumb" src="https://photo-baomoi.bmcdn.me/w100_r1x1/2026_09_03_131_55971618/555bdd67602c8972d03d.jpg" alt="">
+      <div class="hot-card-body">
+        <div class="hot-card-title"><a href="#">Bộ Công an thông tin đã khởi tố Bùi Xuân Huấn về hành vi lừa đảo liên quan số đề</a></div>
+        <div class="hot-card-meta">
+          <span class="hot-card-source">Báo Thể Thao & Văn Hóa</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hot-card">
+      <img class="hot-card-thumb" src="https://photo-baomoi.bmcdn.me/w100_r1x1/2026_09_03_329_55972805/84984f9af2d11b8f42c0.jpg" alt="">
+      <div class="hot-card-body">
+        <div class="hot-card-title"><a href="#">Thái Lan tạo địa chấn châu Á khi thắng trận thứ 2 liên tiếp</a></div>
+        <div class="hot-card-meta">
+          <span class="hot-card-source">Tạp chí SaoStar</span>
+          <span class="hot-card-time">12 giờ</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hot-card">
+      <img class="hot-card-thumb" src="https://photo-baomoi.bmcdn.me/w100_r1x1/2026_09_03_83_55968822/d725f7774a3ca362fa2d.jpg" alt="">
+      <div class="hot-card-body">
+        <div class="hot-card-title"><a href="#">HLV Park Hang Seo: Đối đầu tuyển Việt Nam, chỉ nghĩ thôi đã thấy khủng khiếp</a></div>
+        <div class="hot-card-meta">
+          <span class="hot-card-source">Báo VTC News</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hot-card">
+      <img class="hot-card-thumb" src="https://photo-baomoi.bmcdn.me/w100_r1x1/2026_09_03_56_55970377/63da91f72cbcc5e29cad.jpg" alt="">
+      <div class="hot-card-body">
+        <div class="hot-card-title"><a href="#">Lời khai ban đầu của nghi can sát hại 3 người ở Đồng Nai</a></div>
+        <div class="hot-card-meta">
+          <span class="hot-card-source">Báo Xây Dựng</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hot-card">
+      <img class="hot-card-thumb" src="https://photo-baomoi.bmcdn.me/w100_r1x1/2026_09_04_23_55973195/9819ce438d0864563d19.jpg" alt="">
+      <div class="hot-card-body">
+        <div class="hot-card-title"><a href="#">Loạt giám đốc, bác sĩ bị khởi tố, lộ 'mắt xích' ít người ngờ tới</a></div>
+        <div class="hot-card-meta">
+          <span class="hot-card-source">Báo VietnamNet</span>
+          <span class="hot-card-time">5 giờ</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hot-card">
+      <div class="hot-card-body">
+        <div class="hot-card-title"><a href="#">Ông Nguyễn Duy Ngọc: Việc thuộc thẩm quyền, tại sao đồng chí không làm?</a></div>
+        <div class="hot-card-meta">
+          <span class="hot-card-source">Báo VTC News</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  (function () {
+    var video = document.getElementById('adVideo');
+    var volumeBtn = document.getElementById('adVolumeBtn');
+    var progressFill = document.getElementById('adProgressFill');
+    var playOverlay = document.getElementById('adPlayOverlay');
+    var adHero = document.querySelector('.ad-hero');
+    video.muted = true;
+    var userPaused = false;
+
+    volumeBtn.addEventListener('click', function () {
+      video.muted = !video.muted;
+      volumeBtn.classList.toggle('is-unmuted', !video.muted);
+    });
+
+    video.addEventListener('timeupdate', function () {
+      if (!video.duration) return;
+      progressFill.style.width = (video.currentTime / video.duration) * 100 + '%';
+    });
+
+    function resumeVideo() {
+      userPaused = false;
+      if (video.ended) video.currentTime = 0;
+      video.play();
+    }
+
+    video.addEventListener('click', function () {
+      if (video.paused || video.ended) {
+        resumeVideo();
+      } else {
+        userPaused = true;
+        video.pause();
+      }
+    });
+
+    playOverlay.addEventListener('click', resumeVideo);
+
+    video.addEventListener('pause', function () {
+      playOverlay.classList.add('is-visible');
+    });
+    video.addEventListener('play', function () {
+      playOverlay.classList.remove('is-visible');
+    });
+
+    // Chỉ phát khi video nằm trong viewport; tự pause khi cuộn ra ngoài
+    // (không tính là userPaused nên sẽ tự phát lại khi cuộn vào lại).
+    var viewportObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          if (!userPaused) video.play();
+        } else if (!video.paused) {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.5 });
+    viewportObserver.observe(adHero);
+  })();
+</script>
+
+</body>
+</html>
