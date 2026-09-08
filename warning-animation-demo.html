@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Warning Animation — 3 Patterns</title>
+<style>
+  :root {
+    --color-bg-input: #FFFFFF;
+    --color-border-input: #D4D4D4;
+    --color-border-input-hover: #9E9E9E;
+    --color-border-focus: #008FE5;
+    --color-border-warning: #F1C21B;
+    --color-bg-warning: #FEFAEC;
+    --color-bg-warning-hover: #FDF2B6;
+    --color-text-default: #172B4D;
+    --color-text-secondary: #42526E;
+    --color-text-warning: #9B7404;
+    --color-icon-warning: #F1C21B;
+    --radius-input: 4px;
+    --space-100: 4px;
+    --space-200: 8px;
+    --space-300: 12px;
+    --font-size-350: 14px;
+    --font-size-300: 12px;
+    --line-height-500: 20px;
+    --line-height-400: 16px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Roboto', system-ui, sans-serif; background: #F2F2F2; color: var(--color-text-default); padding: 32px; }
+  h1 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+  .subtitle { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 32px; }
+  .demo-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; max-width: 1200px; }
+  .demo-card { background: #fff; border-radius: 8px; padding: 24px; box-shadow: 0 2px 4px rgba(0,22,55,0.06), 0 0 2px rgba(0,22,55,0.06); }
+  .demo-card h2 { font-size: 14px; font-weight: 600; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+  .demo-card h2 .tag { font-size: 11px; font-weight: 500; padding: 1px 6px; border-radius: 4px; color: #fff; }
+  .tag-low { background: #36B37E; }
+  .tag-mid { background: #008FE5; }
+  .tag-high { background: #DE350B; }
+  .demo-desc { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 16px; line-height: 18px; }
+  .field-label { font-size: var(--font-size-350); font-weight: 600; line-height: var(--line-height-500); margin-bottom: var(--space-100); }
+  .textarea-wrap { position: relative; margin-bottom: var(--space-100); }
+  textarea { width: 100%; min-height: 76px; padding: var(--space-200) var(--space-300); padding-right: 36px; border: 1px solid var(--color-border-input); border-radius: var(--radius-input); background: var(--color-bg-input); font-family: inherit; font-size: var(--font-size-350); line-height: var(--line-height-500); color: var(--color-text-default); resize: vertical; outline: none; transition: border-color 0.2s ease; }
+  textarea:focus { border-color: var(--color-border-focus); }
+  .char-count { position: absolute; right: 8px; top: 8px; font-size: var(--font-size-300); color: var(--color-text-secondary); transition: color 0.3s ease; }
+  .char-count.warn { color: var(--color-text-warning); }
+  .warning-msg { display: flex; align-items: flex-start; gap: var(--space-100); padding-top: var(--space-100); opacity: 0; max-height: 0; overflow: hidden; pointer-events: none; }
+  .warning-msg.visible { opacity: 1; max-height: 60px; pointer-events: auto; }
+  .warning-msg svg { flex-shrink: 0; margin-top: 1px; }
+  .warning-msg p { font-size: var(--font-size-300); line-height: var(--line-height-400); color: var(--color-text-secondary); }
+  .warning-msg p strong { font-weight: 700; }
+  .trigger-btn { margin-top: 16px; padding: 6px 16px; font-size: 13px; font-weight: 500; border: 1px solid var(--color-border-focus); border-radius: var(--radius-input); background: #fff; color: var(--color-border-focus); cursor: pointer; transition: background 0.15s; }
+  .trigger-btn:hover { background: #F0F9FF; }
+  #a-textarea { transition: border-color 0.3s ease; }
+  #a-textarea.warn-border { border-color: var(--color-border-warning); }
+  #a-warning { transition: opacity 0.3s ease-out, max-height 0.3s ease-out, transform 0.3s ease-out; transform: translateY(-4px); }
+  #a-warning.visible { transform: translateY(0); }
+  #b-textarea { transition: border-color 0.2s ease; }
+  #b-textarea.warn-border { border-color: var(--color-border-warning); }
+  @keyframes borderPulse { 0% { box-shadow: 0 0 0 0 rgba(241,194,27,0.5); } 40% { box-shadow: 0 0 0 4px rgba(241,194,27,0.25); } 60% { box-shadow: 0 0 0 0 rgba(241,194,27,0); } 80% { box-shadow: 0 0 0 3px rgba(241,194,27,0.2); } 100% { box-shadow: 0 0 0 0 rgba(241,194,27,0); } }
+  #b-textarea.pulse { animation: borderPulse 0.6s ease-out; }
+  @keyframes iconBounce { 0% { transform: scale(1); } 30% { transform: scale(1.25); } 60% { transform: scale(0.95); } 100% { transform: scale(1); } }
+  #b-warning .warn-icon.bounce { animation: iconBounce 0.35s ease-out; }
+  #b-warning { transition: opacity 0.25s ease-out, max-height 0.25s ease-out; }
+  @keyframes shakeX { 0%, 100% { transform: translateX(0); } 15% { transform: translateX(-4px); } 30% { transform: translateX(4px); } 45% { transform: translateX(-3px); } 60% { transform: translateX(3px); } 75% { transform: translateX(-2px); } 90% { transform: translateX(1px); } }
+  #c-wrap.shake { animation: shakeX 0.35s ease-in-out; }
+  #c-textarea { transition: border-color 0.2s ease; }
+  #c-textarea.warn-border { border-color: var(--color-border-warning); }
+  @keyframes highlightFlash { 0% { background: rgba(254,250,236,0); } 25% { background: rgba(253,242,182,0.9); } 100% { background: rgba(254,250,236,0); } }
+  #c-warning.flash { animation: highlightFlash 1.2s ease-out; }
+  #c-warning { transition: opacity 0.2s ease-out, max-height 0.2s ease-out; border-radius: var(--radius-input); padding: var(--space-100); margin-top: 2px; }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+  .legend { margin-top: 32px; padding: 16px; background: #fff; border-radius: 8px; font-size: 12px; line-height: 20px; color: var(--color-text-secondary); max-width: 1200px; }
+  .legend strong { color: var(--color-text-default); }
+</style>
+</head>
+<body>
+<h1>Warning Micro Animation — So sanh 3 huong</h1>
+<p class="subtitle">Nhan "Trigger warning" de xem animation. Nhan "Reset" de thu lai.</p>
+<div class="demo-grid">
+  <div class="demo-card">
+    <h2>A. Slide-in + Fade <span class="tag tag-low">Low</span></h2>
+    <p class="demo-desc">Warning fade-in + border textarea chuyen mau. Nhe nhang, khong layout shift.</p>
+    <div class="field-label">Loi thoai cho video</div>
+    <div class="textarea-wrap">
+      <textarea id="a-textarea" readonly>Sieu hoi mua sam giam sau 50% toan bo bo suu tap he! Nhap ma SALE100K giam them 100 nghin cho don hang tu 500k. Uu dai ap dung duy nhat tu ngay 12 den 15 thang 6. Mua ngay!</textarea>
+      <span class="char-count" id="a-count">228</span>
+    </div>
+    <div class="warning-msg" id="a-warning">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.33L14.67 13.33H1.33L8 1.33z" fill="#F1C21B" stroke="#9B7404" stroke-width="0.67"/><text x="8" y="11.5" text-anchor="middle" font-size="9" font-weight="700" fill="#9B7404">!</text></svg>
+      <p>Loi thoai dai hon thoi luong video. <strong>Rut ngan loi thoai</strong> hoac <strong>them anh</strong> de khong bi cat tieng.</p>
+    </div>
+    <div style="display:flex;gap:8px;">
+      <button class="trigger-btn" onclick="triggerA()">Trigger warning</button>
+      <button class="trigger-btn" onclick="resetA()" style="border-color:#9E9E9E;color:#42526E;">Reset</button>
+    </div>
+  </div>
+  <div class="demo-card">
+    <h2>B. Border Pulse + Icon Bounce <span class="tag tag-mid">Medium</span></h2>
+    <p class="demo-desc">Border glow pulse 2 lan + icon scale bounce. Focal zone match.</p>
+    <div class="field-label">Loi thoai cho video</div>
+    <div class="textarea-wrap">
+      <textarea id="b-textarea" readonly>Sieu hoi mua sam giam sau 50% toan bo bo suu tap he! Nhap ma SALE100K giam them 100 nghin cho don hang tu 500k. Uu dai ap dung duy nhat tu ngay 12 den 15 thang 6. Mua ngay!</textarea>
+      <span class="char-count" id="b-count">228</span>
+    </div>
+    <div class="warning-msg" id="b-warning">
+      <svg class="warn-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.33L14.67 13.33H1.33L8 1.33z" fill="#F1C21B" stroke="#9B7404" stroke-width="0.67"/><text x="8" y="11.5" text-anchor="middle" font-size="9" font-weight="700" fill="#9B7404">!</text></svg>
+      <p>Loi thoai dai hon thoi luong video. <strong>Rut ngan loi thoai</strong> hoac <strong>them anh</strong> de khong bi cat tieng.</p>
+    </div>
+    <div style="display:flex;gap:8px;">
+      <button class="trigger-btn" onclick="triggerB()">Trigger warning</button>
+      <button class="trigger-btn" onclick="resetB()" style="border-color:#9E9E9E;color:#42526E;">Reset</button>
+    </div>
+  </div>
+  <div class="demo-card">
+    <h2>C. Shake + Highlight Band <span class="tag tag-high">High</span></h2>
+    <p class="demo-desc">Textarea shake 4px + warning row flash highlight. Dung khi vuot nguong lon.</p>
+    <div class="field-label">Loi thoai cho video</div>
+    <div class="textarea-wrap" id="c-wrap">
+      <textarea id="c-textarea" readonly>Sieu hoi mua sam giam sau 50% toan bo bo suu tap he! Nhap ma SALE100K giam them 100 nghin cho don hang tu 500k. Uu dai ap dung duy nhat tu ngay 12 den 15 thang 6. Mua ngay!</textarea>
+      <span class="char-count" id="c-count">228</span>
+    </div>
+    <div class="warning-msg" id="c-warning">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.33L14.67 13.33H1.33L8 1.33z" fill="#F1C21B" stroke="#9B7404" stroke-width="0.67"/><text x="8" y="11.5" text-anchor="middle" font-size="9" font-weight="700" fill="#9B7404">!</text></svg>
+      <p>Loi thoai dai hon thoi luong video. <strong>Rut ngan loi thoai</strong> hoac <strong>them anh</strong> de khong bi cat tieng.</p>
+    </div>
+    <div style="display:flex;gap:8px;">
+      <button class="trigger-btn" onclick="triggerC()">Trigger warning</button>
+      <button class="trigger-btn" onclick="resetC()" style="border-color:#9E9E9E;color:#42526E;">Reset</button>
+    </div>
+  </div>
+</div>
+<div class="legend">
+  <strong>Timing spec:</strong> A = 300ms fade+slide | B = 600ms border pulse + 350ms icon bounce | C = 350ms shake + 1.2s highlight flash<br>
+  <strong>A11y:</strong> All animations disabled with <code>prefers-reduced-motion: reduce</code>.<br>
+  <strong>Recommendation:</strong> Pattern B is the sweet spot.
+</div>
+<script>
+function triggerA(){document.getElementById('a-textarea').classList.add('warn-border');document.getElementById('a-count').classList.add('warn');document.getElementById('a-warning').classList.add('visible');}
+function resetA(){document.getElementById('a-textarea').classList.remove('warn-border');document.getElementById('a-count').classList.remove('warn');document.getElementById('a-warning').classList.remove('visible');}
+function triggerB(){const t=document.getElementById('b-textarea'),i=document.querySelector('#b-warning .warn-icon');t.classList.add('warn-border');document.getElementById('b-count').classList.add('warn');document.getElementById('b-warning').classList.add('visible');t.classList.remove('pulse');void t.offsetWidth;t.classList.add('pulse');i.classList.remove('bounce');void i.offsetWidth;i.classList.add('bounce');}
+function resetB(){const t=document.getElementById('b-textarea');t.classList.remove('warn-border','pulse');document.getElementById('b-count').classList.remove('warn');document.getElementById('b-warning').classList.remove('visible');document.querySelector('#b-warning .warn-icon').classList.remove('bounce');}
+function triggerC(){const w=document.getElementById('c-wrap'),t=document.getElementById('c-textarea'),m=document.getElementById('c-warning');t.classList.add('warn-border');document.getElementById('c-count').classList.add('warn');m.classList.add('visible');w.classList.remove('shake');void w.offsetWidth;w.classList.add('shake');m.classList.remove('flash');void m.offsetWidth;m.classList.add('flash');}
+function resetC(){document.getElementById('c-wrap').classList.remove('shake');document.getElementById('c-textarea').classList.remove('warn-border');document.getElementById('c-count').classList.remove('warn');const m=document.getElementById('c-warning');m.classList.remove('visible','flash');}
+</script>
+</body>
+</html>
